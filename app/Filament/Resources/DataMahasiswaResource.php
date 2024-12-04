@@ -80,6 +80,7 @@ class DataMahasiswaResource extends Resource
                     ->options(
                         \App\Models\Dosen::all()->pluck('name', 'id')
                     )
+                    ->searchable()
                     ->placeholder('Dosen Wali')
                     ->rules(['required']),
 

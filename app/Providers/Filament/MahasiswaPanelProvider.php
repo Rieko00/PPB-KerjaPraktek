@@ -17,6 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class MahasiswaPanelProvider extends PanelProvider
 {
@@ -27,7 +28,7 @@ class MahasiswaPanelProvider extends PanelProvider
             ->path('mahasiswa')
             ->login()
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::Indigo,
             ])
             ->discoverResources(in: app_path('Filament/Mahasiswa/Resources'), for: 'App\\Filament\\Mahasiswa\\Resources')
             ->discoverPages(in: app_path('Filament/Mahasiswa/Pages'), for: 'App\\Filament\\Mahasiswa\\Pages')
@@ -53,6 +54,18 @@ class MahasiswaPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->authGuard('mahasiswa');
+            ->authGuard('mahasiswa')
+            ->plugins([
+                FilamentEditProfilePlugin::make()
+                    // ->slug('m-profile')
+                    ->setTitle('My Profile')
+                    ->setNavigationLabel('My Profile')
+                    ->setIcon('heroicon-o-user')
+                    ->shouldShowEditProfileForm(false)
+                    ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowSanctumTokens(false)
+                    ->shouldShowBrowserSessionsForm(false)
+                    ->shouldShowAvatarForm(false)
+            ]);
     }
 }
