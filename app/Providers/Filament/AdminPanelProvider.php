@@ -59,6 +59,15 @@ class AdminPanelProvider extends PanelProvider
             ->authGuard('admin')
             ->plugins([
                 FilamentEditProfilePlugin::make()
+                    // ->slug('m-profile')
+                    ->setTitle('My Profile')
+                    ->setNavigationLabel('My Profile')
+                    ->setIcon('heroicon-o-user')
+                    ->shouldShowEditProfileForm(false)
+                    ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowSanctumTokens(false)
+                    ->shouldShowBrowserSessionsForm(false)
+                    ->shouldShowAvatarForm(false)
             ]);
     }
 }
