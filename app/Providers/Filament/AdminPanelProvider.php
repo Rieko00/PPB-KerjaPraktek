@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('SiKaPe')
             ->colors([
                 'primary' => Color::Blue,
             ])

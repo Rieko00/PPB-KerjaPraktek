@@ -34,6 +34,7 @@ class DosenPanelProvider extends PanelProvider
             ->id('dosen')
             ->path('dosen')
             ->login()
+            ->brandName('SiKaPe')
             ->colors([
                 'primary' => Color::Amber,
             ])

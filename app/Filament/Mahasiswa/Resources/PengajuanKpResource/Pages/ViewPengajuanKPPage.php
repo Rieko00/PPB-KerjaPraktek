@@ -16,7 +16,8 @@ use Filament\Forms\Components\Textarea;
 class ViewPengajuanKp extends ViewRecord
 {
     protected static string $resource = PengajuanKpResource::class;
-
+    protected static ?string $title = 'Pengajuan KP';
+    protected ?string $heading = 'Pengajuan KP';
     protected function getFormSchema(): array
     {
         return [];
