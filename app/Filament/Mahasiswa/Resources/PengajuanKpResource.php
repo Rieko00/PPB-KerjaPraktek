@@ -161,24 +161,29 @@ class PengajuanKpResource extends Resource
                         'ditolak' => 'danger',
                     })
                     ->sortable(),
-                TextColumn::make('city.city_name')
-                    ->label('kota')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('district.dis_name')
-                    ->label('kecamatan')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('subdistrict.subdis_name')
-                    ->label('kelurahan')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('postalcode.postal_code')
-                    ->label('kode pos')
-                    ->searchable()
-                    ->sortable(),
+                // TextColumn::make('city.city_name')
+                //     ->label('kota')
+                //     ->searchable()
+                //     ->sortable(),
+                // TextColumn::make('district.dis_name')
+                //     ->label('kecamatan')
+                //     ->searchable()
+                //     ->sortable(),
+                // TextColumn::make('subdistrict.subdis_name')
+                //     ->label('kelurahan')
+                //     ->searchable()
+                //     ->sortable(),
+                // TextColumn::make('postalcode.postal_code')
+                //     ->label('kode pos')
+                //     ->searchable()
+                //     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('dibuat')
+                    ->sortable()
+                    ->since()
+                    ->dateTimeTooltip(),
+                TextColumn::make('updated_at')
+                    ->label('diperbarui')
                     ->sortable()
                     ->since()
                     ->dateTimeTooltip(),

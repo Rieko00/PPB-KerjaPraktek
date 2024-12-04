@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LaporanKp extends Model
+class PenerimaanKP extends Model
 {
-    protected $table = 'laporan_kp';
+    protected $table = 'penerimaan_kp';
+
     protected $fillable = [
         'id_pengajuan_kp',
-        'status_laporan',
+        'status_penerimaan',
         'keterangan',
         'file',
-        'file_revisi'
-
     ];
 }

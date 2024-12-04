@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,7 +27,7 @@ class ProposalKpResource extends Resource
     // Ganti nama grup di navigasi (jika perlu)
     protected static ?string $navigationGroup = 'Kerja Praktek';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -62,7 +63,23 @@ class ProposalKpResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('mahasiswa.name')
+                    ->label('Nama Mahasiswa'),
+                TextColumn::make('status_proposal')
+                    ->label('Status Proposal'),
+                TextColumn::make('keterangan')
+                    ->label('Keterangan'),
+                TextColumn::make('created_at')
+                    ->label('dibuat')
+                    ->sortable()
+                    ->since()
+                    ->dateTimeTooltip(),
+                TextColumn::make('updated_at')
+                    ->label('diperbarui')
+                    ->sortable()
+                    ->since()
+                    ->dateTimeTooltip(),
+
             ])
             ->filters([
                 //

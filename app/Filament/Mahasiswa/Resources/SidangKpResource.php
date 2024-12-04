@@ -2,9 +2,9 @@
 
 namespace App\Filament\Mahasiswa\Resources;
 
-use App\Filament\Mahasiswa\Resources\MahasiswaResource\Pages;
-use App\Filament\Mahasiswa\Resources\MahasiswaResource\RelationManagers;
-use App\Models\Mahasiswa;
+use App\Filament\Mahasiswa\Resources\SidangKpResource\Pages;
+use App\Filament\Mahasiswa\Resources\SidangKpResource\RelationManagers;
+use App\Models\SidangKp;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,26 +12,31 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Teguh02\IndonesiaTerritoryForms\IndonesiaTerritoryForms;
 
-class MahasiswaResource extends Resource
+class SidangKpResource extends Resource
 {
-    protected static ?string $model = Mahasiswa::class;
+    protected static ?string $model = SidangKp::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Sidang KP';
 
+    // // Ganti nama grup di navigasi (jika perlu)
+    protected static ?string $navigationGroup = 'Kerja Praktek';
+    protected static ?int $navigationSort = 5;
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                IndonesiaTerritoryForms::make(),
+                //
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([])
+            ->columns([
+                //
+            ])
             ->filters([
                 //
             ])
@@ -55,9 +60,9 @@ class MahasiswaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMahasiswas::route('/'),
-            'create' => Pages\CreateMahasiswa::route('/create'),
-            'edit' => Pages\EditMahasiswa::route('/{record}/edit'),
+            'index' => Pages\ListSidangKps::route('/'),
+            'create' => Pages\CreateSidangKp::route('/create'),
+            'edit' => Pages\EditSidangKp::route('/{record}/edit'),
         ];
     }
 }

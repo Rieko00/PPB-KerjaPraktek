@@ -29,7 +29,7 @@ class DosenPanelProvider extends PanelProvider
                 NavigationItem::make('Homepage')
                     ->url('/') // URL untuk mengarahkan ke homepage
                     ->icon('heroicon-o-home') // Ikon untuk menu
-                    ->sort(0), // Urutan menu
+                    ->sort(3), // Urutan menu
             ])
             ->id('dosen')
             ->path('dosen')
@@ -46,7 +46,6 @@ class DosenPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Dosen/Widgets'), for: 'App\\Filament\\Dosen\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
