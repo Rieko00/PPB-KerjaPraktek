@@ -252,6 +252,17 @@ class SidangKpResource extends Resource
                 ]),
             ]);
     }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return parent::getEloquentQuery()->whereHas('pengajuanKp', function (Builder $query) {
+            $query->join('laporan_kp', 'laporan_kp.id_pengajuan_kp', '=', 'pengajuan_kp.id')
+                ->join('pengajuan_kp as pk', 'pk.id', '=', 'laporan_kp.id_pengajuan_kp')
+                ->join('mahasiswas as mahasiswa', 'mahasiswa.id', '=', 'pk.id_mahasiswa')
+                ->where('pk.id_mahasiswa', Auth::user()->id);
+        });
+    }
+
     public static function getRelations(): array
     {
         return [

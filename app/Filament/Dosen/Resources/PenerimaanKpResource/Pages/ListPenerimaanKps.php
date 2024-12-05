@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Filament\Mahasiswa\Resources\PenerimaanKpResource\Pages;
+namespace App\Filament\Dosen\Resources\PenerimaanKpResource\Pages;
 
-use App\Filament\Mahasiswa\Resources\PenerimaanKpResource;
+use App\Filament\Dosen\Resources\PenerimaanKpResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
-class EditPenerimaanKp extends EditRecord
+class ListPenerimaanKps extends ListRecords
 {
     protected static string $resource = PenerimaanKpResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\CreateAction::make(),
         ];
     }
     public function getTabs(): array

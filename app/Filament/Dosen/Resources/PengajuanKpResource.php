@@ -1,138 +1,44 @@
 <?php
 
-namespace App\Filament\Mahasiswa\Resources;
+namespace App\Filament\Dosen\Resources;
 
-use App\Filament\Mahasiswa\Resources\PengajuanKpResource\Pages;
-use App\Filament\Mahasiswa\Resources\PengajuanKpResource\RelationManagers;
-use App\Filament\Mahasiswa\Resources\ProposalKpResource\Pages\CreateProposalKp;
+use App\Filament\Dosen\Resources\PengajuanKpResource\Pages;
+use App\Filament\Dosen\Resources\PengajuanKpResource\RelationManagers;
 use App\Models\Pengajuan_kp as PengajuanKp;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\EditAction;
-use Filament\Navigation\NavigationItem;
-use Filament\Pages\SubNavigationPosition;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Infolists\Components;
-use Filament\Infolists\Infolist;
-use Filament\Forms\Components\SpatieTagsInput;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Infolists\Components\Actions;
-use Filament\Infolists\Components\Actions\Action;
-use Filament\Infolists\Components\Component;
-use Filament\Infolists\Components\IconEntry;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Teguh02\IndonesiaTerritoryForms\IndonesiaTerritoryForms;
-use Filament\Tables\Actions\Action as TableAction;
-use Filament\Tables\Actions\CreateAction;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Tables\Actions\ViewAction;
-// use App\Filament\Resources\CustomerResource\Pages;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Resources\Pages\Page;
-use Filament\Forms\Components\Hidden;
 use Illuminate\Support\Facades\Auth;
-use App\Filament\Mahasiswa\Resources\ProposalKpResource\Pages\ViewProposalKps;
-use App\Models\Mahasiswa;
-use App\Models\ProposalKp;
-use Faker\Provider\ar_EG\Text;
-use Teguh02\IndonesiaTerritoryForms\Traits\HasProvinceForm;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use GuzzleHttp\Promise\Create;
-use Illuminate\Database\Schema\Blueprint;
-use Teguh02\IndonesiaTerritoryForms\Traits\HasCityForm;
-use Teguh02\IndonesiaTerritoryForms\Traits\HasDistrictForm;
-use Teguh02\IndonesiaTerritoryForms\Traits\HasPostalCode;
-use Teguh02\IndonesiaTerritoryForms\Traits\HasSubDistrictForm;
 
-use function Laravel\Prompts\text;
+use Filament\Infolists\Components;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Actions;
+use Filament\Infolists\Components\Actions\Action;
+use Filament\Infolists\Components\IconEntry;
 
 class PengajuanKpResource extends Resource
 {
-    use HasProvinceForm,
-        HasCityForm,
-        HasDistrictForm,
-        HasSubDistrictForm,
-        HasPostalCode;
-
     protected static ?string $model = PengajuanKp::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    // protected static ?string $slug = 'mahasiswa';
-
-    // Ganti label di navigasi
     protected static ?string $navigationLabel = 'Pengajuan KP';
 
-    // Ganti nama grup di navigasi (jika perlu)
+    // // Ganti nama grup di navigasi (jika perlu)
     protected static ?string $navigationGroup = 'Kerja Praktek';
-    protected static ?int $navigationSort = 0;
-
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?int $navigationSort = 2;
     public static function form(Form $form): Form
     {
-        // dd(Auth::user());
         return $form
             ->schema([
-                // Select::make('id_mahasiswa')
-                //     ->label('Nama Mahasiswa') // Label untuk debugging, bisa dihilangkan nanti
-                //     ->options([
-                //         auth::user()->id =>  auth::user()->name,
-                //     ])
-                //     ->default(fn() => auth::user()->id) // Ambil ID user yang login
-                //     // ->disabledOn('create')
-                //     ->native(false)
-                //     ->preload()
-                //     ->selectablePlaceholder(false)
-                //     ->live(),
-                Section::make('Data Mahasiswa')
-                    ->schema([
-                        TextInput::make('Nama Mahasiswa')
-                            ->label('Nama Mahasiswa')
-                            ->default(auth::user()->name)
-                            ->disabled(),
-                        TextInput::make('NIM Mahasiswa')
-                            ->label('NIM Mahasiswa')
-                            ->default(auth::user()->nim)
-                            ->disabled(),
-                        TextInput::make('Sks Mahasiswa')
-                            ->label('Sks Mahasiswa')
-                            ->default(auth::user()->jumlah_sks)
-                            ->disabled(),
-                        TextInput::make('IPK Mahasiswa')
-                            ->label('IPK Mahasiswa')
-                            ->default(auth::user()->ipk)
-                            ->disabled(),
-                    ])
-                    ->columns('2'), // Membuat card selebar form
-
-                Hidden::make('status_pengajuan')
-                    ->label('Status Pengajuan')
-                    ->default('pending'),
-                Hidden::make('id_mahasiswa')
-                    ->label('Status Pengajuan')
-                    ->default(auth::user()->id),
-
-                Section::make('Data Perusahaan')
-                    ->schema([
-                        TextInput::make('nama_perusahaan')
-                            ->label('Nama Perusahaan')
-                            ->required()
-                            ->filled(),
-
-                        static::province_form(),
-                        config('indonesia-territory-forms.forms_visibility.city') ? static::city_form() : null,
-                        config('indonesia-territory-forms.forms_visibility.district') ? static::district_form() : null,
-                        config('indonesia-territory-forms.forms_visibility.sub_district') ? static::sub_district_form() : null,
-                        config('indonesia-territory-forms.forms_visibility.postal_code') ? static::postal_code_form() : null,
-                    ])
-                    ->columns('2'),
+                //
             ]);
     }
 
@@ -171,23 +77,15 @@ class PengajuanKpResource extends Resource
                     ->sortable()
                     ->since()
                     ->dateTimeTooltip(),
-
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-            ])
-        ;
+            ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -271,17 +169,24 @@ class PengajuanKpResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return parent::getEloquentQuery()->where('id_mahasiswa', auth::id());
+        return parent::getEloquentQuery()->whereHas('mahasiswa', function (Builder $query) {
+            $query->where('dosens', Auth::user()->id);
+        });
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPengajuanKp::route('/'),
-            'create' => Pages\CreatePengajuanKp::route('/create'),
-            'edit' => Pages\EditPengajuanKp::route('/{record}/edit'),
+            'index' => Pages\ListPengajuanKps::route('/'),
             'view' => Pages\ViewPengajuanKp::route('/{record}'),
+
         ];
     }
 }
