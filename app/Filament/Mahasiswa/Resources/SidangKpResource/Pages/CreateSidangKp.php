@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSidangKp extends CreateRecord
 {
     protected static string $resource = SidangKpResource::class;
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+    protected static bool $canCreateAnother = false;
 }

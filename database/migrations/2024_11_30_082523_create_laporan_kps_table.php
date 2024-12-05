@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('laporan_kp', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_pengajuan_kp')->constrained('pengajuan_kp');
+            $table->string('judul');
             $table->enum('status_laporan', ['diterima', 'ditolak', 'revisi', 'pending']);
             $table->string('keterangan');
             $table->string('file');
-            $table->string('file_revisi');
             $table->timestamps();
         });
     }

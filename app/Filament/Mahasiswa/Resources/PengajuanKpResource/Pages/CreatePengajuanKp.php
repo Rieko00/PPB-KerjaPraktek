@@ -9,5 +9,11 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePengajuanKp extends CreateRecord
 {
     protected static string $resource = PengajuanKpResource::class;
+    protected static ?string $title = 'Buat Pengajuan KP';
+    protected ?string $heading = 'Buat Pengajuan KP';
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
     protected static bool $canCreateAnother = false;
 }

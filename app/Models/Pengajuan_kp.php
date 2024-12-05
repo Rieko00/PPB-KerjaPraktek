@@ -49,4 +49,18 @@ class Pengajuan_kp extends Model
     {
         return $this->hasOne(ProposalKp::class, 'id_pengajuan_kp');
     }
+
+    public function penerimaanKp()
+    {
+        return $this->hasOne(PenerimaanKP::class, 'id_pengajuan_kp');
+    }
+
+    public function laporanKp()
+    {
+        return $this->hasOne(LaporanKp::class, 'id_pengajuan_kp');
+    }
+    public function sidangKp()
+    {
+        return $this->hasOne(SidangKp::class, 'id_pengajuan_kp');
+    }
 }

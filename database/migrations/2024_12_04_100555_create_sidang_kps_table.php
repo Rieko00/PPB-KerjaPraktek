@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_pengajuan_kp')->constrained('pengajuan_kp');
             $table->string('keterangan');
-            $table->dateTime('tanggal');
-            $table->string('jam');
-            $table->string('ruangan');
-            $table->string('penguji');
-            $table->string('nilai');
+            $table->dateTime('tanggal')->nullable();
+
+            $table->string('ruangan')->nullable();
+            $table->string('penguji')->nullable();
+            $table->string('nilai')->nullable();
+            $table->timestamps();
         });
     }
 

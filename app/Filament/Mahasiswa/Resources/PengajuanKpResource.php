@@ -199,11 +199,7 @@ class PengajuanKpResource extends Resource
             //     Tables\Actions\CreateAction::make()
             //         ->createAnother(false)
             // ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        ;
     }
 
     public static function getRelations(): array
@@ -298,23 +294,6 @@ class PengajuanKpResource extends Resource
         return parent::getEloquentQuery()->where('id_mahasiswa', auth::id());
     }
 
-    public static function getRecordSubNavigation(Page $page): array
-    {
-        $record = $page->getRecord();
-        $navigationItems = [
-            Pages\ViewPengajuanKp::class,
-            Pages\EditPengajuanKp::class,
-            CreateProposalKp::class,
-        ];
-
-        if (!$record->proposalKp()->exists()) {
-            $navigationItems[] = CreateProposalKp::class;
-        } else {
-            $navigationItems[] = ViewProposalKps::class;
-        }
-
-        return $page->generateNavigationItems($navigationItems);
-    }
 
     public static function getPages(): array
     {

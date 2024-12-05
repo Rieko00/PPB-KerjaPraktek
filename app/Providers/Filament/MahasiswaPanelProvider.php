@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -24,6 +25,12 @@ class MahasiswaPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->navigationItems([
+                NavigationItem::make('Homepage')
+                    ->url('/') // URL untuk mengarahkan ke homepage
+                    ->icon('heroicon-o-home') // Ikon untuk menu
+                    ->sort(3), // Urutan menu
+            ])
             ->id('mahasiswa')
             ->path('mahasiswa')
             ->login()

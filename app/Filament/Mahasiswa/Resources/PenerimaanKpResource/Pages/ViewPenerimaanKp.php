@@ -4,14 +4,14 @@ namespace App\Filament\Mahasiswa\Resources\PenerimaanKpResource\Pages;
 
 use App\Filament\Mahasiswa\Resources\PenerimaanKpResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class CreatePenerimaanKp extends CreateRecord
+class ViewPenerimaanKp extends ViewRecord
 {
     protected static string $resource = PenerimaanKpResource::class;
-    protected function getRedirectUrl(): string
+
+    protected function getFormSchema(): array
     {
-        return $this->getResource()::getUrl('index');
+        return [];
     }
-    protected static bool $canCreateAnother = false;
 }
