@@ -9,7 +9,3 @@ use App\Http\Livewire\DosenLogin;
 Route::get('/', function () {
     return view('homepage');
 });
-
-Route::get('/login', function () {
-    return view('login');
-});

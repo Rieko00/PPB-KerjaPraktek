@@ -161,24 +161,13 @@ class PengajuanKpResource extends Resource
                         'ditolak' => 'danger',
                     })
                     ->sortable(),
-                TextColumn::make('city.city_name')
-                    ->label('kota')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('district.dis_name')
-                    ->label('kecamatan')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('subdistrict.subdis_name')
-                    ->label('kelurahan')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('postalcode.postal_code')
-                    ->label('kode pos')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label('dibuat')
+                    ->sortable()
+                    ->since()
+                    ->dateTimeTooltip(),
+                TextColumn::make('updated_at')
+                    ->label('diperbarui')
                     ->sortable()
                     ->since()
                     ->dateTimeTooltip(),
@@ -190,15 +179,7 @@ class PengajuanKpResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
             ])
-            // ->headerActions([
-            //     Tables\Actions\CreateAction::make()
-            //         ->createAnother(false)
-            // ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        ;
     }
 
     public static function getRelations(): array
@@ -293,23 +274,6 @@ class PengajuanKpResource extends Resource
         return parent::getEloquentQuery()->where('id_mahasiswa', auth::id());
     }
 
-    public static function getRecordSubNavigation(Page $page): array
-    {
-        $record = $page->getRecord();
-        $navigationItems = [
-            Pages\ViewPengajuanKp::class,
-            Pages\EditPengajuanKp::class,
-            CreateProposalKp::class,
-        ];
-
-        if (!$record->proposalKp()->exists()) {
-            $navigationItems[] = CreateProposalKp::class;
-        } else {
-            $navigationItems[] = ViewProposalKps::class;
-        }
-
-        return $page->generateNavigationItems($navigationItems);
-    }
 
     public static function getPages(): array
     {

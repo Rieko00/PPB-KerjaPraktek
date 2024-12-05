@@ -1,5 +1,5 @@
 @extends('template.layout')
-@section('title', 'Project KP')
+@section('title', 'Home | SiKaPe')
 @section('content')
 
 
@@ -10,17 +10,24 @@
                 <h1
                     class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                     Selamat Datang</h1>
-                <p class="mb-8 text-lg pe-4 font-normal text-justify text-gray-500 lg:text-xl dark:text-gray-400">Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Eveniet reiciendis amet quo odit laudantium asperiores
-                    obcaecati. Asperiores tempora quos minus molestiae. Vero fugit odit beatae autem tempora temporibus.
-                    Repudiandae, quos!</p>
+                <p class="mb-8 text-lg pe-4 font-normal text-justify text-gray-500 lg:text-xl dark:text-gray-400">
+                    <span class="font-bold text-blue-700 dark:text-gray-400">SiKaPe</span> merupakan sistem informasi
+                    kerja prakter yang
+                    bertujuan memudahkan mahasiswa
+                    dan dosen pembimbing dalam melaksanakan prosedur kerja prakter. Sistem ini memungkinkan mahasiswa untuk
+                    melakukan pengajuan kerja praktek,pendaftaran proposal kerja prakter, bimbingan laporan kerja praktek,
+                    pendaftaran sidang kerja praktek, dan input nilai kerja praktek. Sistem ini juga memungkinkan dosen
+                    untuk melakukan validasi pengajuan, proses bimbingan, revisi laporan, validasi laporan dan sidang kerja
+                    praktek serta input nilai kerja praktek.
+
+                </p>
                 <div class="flex flex-col space-y-4 sm:flex-row sm:justify-start sm:space-y-0">
-                    <a href="#"
+                    {{-- <a href="#"
                         class="py-3 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-blue-700 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                         Learn more
-                    </a>
+                    </a> --}}
                     <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 sm:ms-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 sm:ms text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button">Login<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -51,17 +58,17 @@
                 </div>
 
             </div>
-            <div class="w-full lg:w-2/4 p-4">
-                <img src="https://placehold.co/600x400" alt="" srcset="">
+            <div class="w-full lg:w-2/4 p-4 ">
+                <img class="h-5/6" src="{{ asset('img/logoUtm.png') }}" alt="" srcset="">
             </div>
         </div>
     </section>
 
-    <section class="bg-white dark:bg-gray-900">
+    {{-- <section class="bg-white dark:bg-gray-900">
         <div class="h-screen">
 
         </div>
-    </section>
+    </section> --}}
 
 
 @endsection

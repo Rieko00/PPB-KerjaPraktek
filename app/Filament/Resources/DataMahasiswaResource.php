@@ -31,6 +31,7 @@ class DataMahasiswaResource extends Resource
 
     // Ganti nama grup di navigasi (jika perlu)
     protected static ?string $navigationGroup = 'Manajemen User';
+    protected static ?int $navigationSort = 12;
     public static function form(Form $form): Form
     {
         return $form
