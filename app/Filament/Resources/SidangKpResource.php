@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Filament\Mahasiswa\Resources;
+namespace App\Filament\Resources;
 
-use App\Filament\Mahasiswa\Resources\SidangKpResource\Pages;
-use App\Filament\Mahasiswa\Resources\SidangKpResource\RelationManagers;
-use App\Models\LaporanKp;
+use App\Filament\Resources\SidangKpResource\Pages;
+use App\Filament\Resources\SidangKpResource\RelationManagers;
 use App\Models\SidangKp;
+use App\Models\LaporanKp;
 use App\Models\Dosen;
 use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
 
 use Filament\Infolists\Components;
 use Filament\Infolists\Infolist;
@@ -40,32 +40,14 @@ class SidangKpResource extends Resource
     // // Ganti nama grup di navigasi (jika perlu)
     protected static ?string $navigationGroup = 'Kerja Praktek';
     protected static ?int $navigationSort = 5;
+
+    protected static ?int $navigationGroupSort = 0;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Data Pengajuan Mahasiswa')
-                    ->schema([
-                        TextInput::make('Nama Mahasiswa')
-                            ->default(Auth::user()->name)
-                            ->default(auth::user()->name)
-                            ->disabled(),
-                        TextInput::make('NIM Mahasiswa')
-                            ->label('NIM Mahasiswa')
-                            ->default(auth::user()->nim)
-                            ->disabled(),
-                        TextInput::make('Sks Mahasiswa')
-                            ->label('Sks Mahasiswa')
-                            ->default(auth::user()->jumlah_sks)
-                            ->disabled(),
-                        TextInput::make('IPK Mahasiswa')
-                            ->label('IPK Mahasiswa')
-                            ->default(auth::user()->ipk)
-                            ->disabled(),
-
-                    ])
-                    ->columns('2'),
-                Section::make('Data Sidang KP')
+                Section::make('Data Laporan KP')
                     ->schema([
                         // Select::make('status_penerimaan')
                         //     ->label('Hasil Penerimaan Peruusahaan')
@@ -82,23 +64,29 @@ class SidangKpResource extends Resource
                             ->default('pending')
                             ->required(),
                         Forms\Components\Select::make('id_pengajuan_kp')
-                            ->label('Pilih Pengajuan KP')
+                            ->label('Pilih KP')
                             ->options(
                                 LaporanKp::join('pengajuan_kp', 'pengajuan_kp.id', '=', 'laporan_kp.id_pengajuan_kp')
                                     ->join('proposal_kps', 'proposal_kps.id_pengajuan_kp', '=', 'pengajuan_kp.id')
                                     ->join('penerimaan_kp', 'penerimaan_kp.id_pengajuan_kp', '=', 'pengajuan_kp.id')
-                                    ->where('pengajuan_kp.id_mahasiswa', Auth::user()->id)
+                                    ->join('mahasiswas', 'mahasiswas.id', '=', 'pengajuan_kp.id_mahasiswa')
                                     ->where('pengajuan_kp.status_pengajuan', 'diterima')
                                     ->where('proposal_kps.status_proposal', 'diterima')
                                     ->where('penerimaan_kp.status_penerimaan', 'diterima')
                                     ->where('laporan_kp.status_laporan', 'diterima')
-                                    ->pluck('pengajuan_kp.nama_perusahaan', 'pengajuan_kp.id')
+                                    ->select('pengajuan_kp.id', 'laporan_kp.judul', 'mahasiswas.nim', 'mahasiswas.name')
+                                    // ->pluck('laporan_kp.judul', 'pengajuan_kp.id')
+                                    ->get()
+                                    ->mapWithKeys(function ($item) {
+                                        return [$item['id'] => $item['judul'] . ' - ' . $item['nim'] . ' - ' . $item['name']];
+                                    })
                                     ->toArray()
                             )
                             ->required()
                             ->native(false)
                             ->searchable()
-                            ->selectablePlaceholder(false),
+                            ->selectablePlaceholder(false)
+                            ->unique(),
 
                         TextInput::make('ruangan')
                             ->label('Ruangan Sidang')
@@ -167,8 +155,14 @@ class SidangKpResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
+
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -251,16 +245,6 @@ class SidangKpResource extends Resource
                         ->successNotificationTitle('Data updated'),
                 ]),
             ]);
-    }
-
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
-    {
-        return parent::getEloquentQuery()->whereHas('pengajuanKp', function (Builder $query) {
-            $query->join('laporan_kp', 'laporan_kp.id_pengajuan_kp', '=', 'pengajuan_kp.id')
-                ->join('pengajuan_kp as pk', 'pk.id', '=', 'laporan_kp.id_pengajuan_kp')
-                ->join('mahasiswas as mahasiswa', 'mahasiswa.id', '=', 'pk.id_mahasiswa')
-                ->where('pk.id_mahasiswa', Auth::user()->id);
-        });
     }
 
     public static function getRelations(): array

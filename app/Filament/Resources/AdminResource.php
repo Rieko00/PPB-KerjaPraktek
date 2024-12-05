@@ -27,6 +27,8 @@ class AdminResource extends Resource
     // Ganti nama grup di navigasi (jika perlu)
     protected static ?string $navigationGroup = 'Manajemen User';
 
+    protected static ?int $navigationSort = 10;
+
     public static function form(Form $form): Form
     {
         return $form
