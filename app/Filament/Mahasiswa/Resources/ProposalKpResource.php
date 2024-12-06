@@ -232,30 +232,30 @@ class ProposalKpResource extends Resource
                     ->columns('2')
                     ->collapsible(),
                 Actions::make([
-                    Action::make('status_proposal_edit')
-                        ->icon('heroicon-o-pencil-square')
-                        ->label('Edit Status Proposal')
-                        ->form([
-                            Select::make('status_proposal')
-                                ->label('Status Pengajuan')
-                                ->options([
-                                    'diterima' => 'Terima',
-                                    'revisi' => 'Revisi',
-                                ])
-                                ->required()
-                                ->native('false')
-                                ->searchable(),
-                            Textarea::make('keterangan')
-                                ->label('Keterangan')
-                                ->required(),
+                    // Action::make('status_proposal_edit')
+                    //     ->icon('heroicon-o-pencil-square')
+                    //     ->label('Edit Status Proposal')
+                    //     ->form([
+                    //         Select::make('status_proposal')
+                    //             ->label('Status Pengajuan')
+                    //             ->options([
+                    //                 'diterima' => 'Terima',
+                    //                 'revisi' => 'Revisi',
+                    //             ])
+                    //             ->required()
+                    //             ->native('false')
+                    //             ->searchable(),
+                    //         Textarea::make('keterangan')
+                    //             ->label('Keterangan')
+                    //             ->required(),
 
-                        ])
-                        ->action(function (array $data, ProposalKp $record): void {
-                            $record->status_proposal = $data['status_proposal'];
-                            $record->keterangan = $data['keterangan'];
-                            $record->save();
-                        })
-                        ->successNotificationTitle('Status updated'),
+                    //     ])
+                    //     ->action(function (array $data, ProposalKp $record): void {
+                    //         $record->status_proposal = $data['status_proposal'];
+                    //         $record->keterangan = $data['keterangan'];
+                    //         $record->save();
+                    //     })
+                    //     ->successNotificationTitle('Status updated'),
 
                     Action::make('revisi')
                         ->icon('heroicon-o-pencil-square')

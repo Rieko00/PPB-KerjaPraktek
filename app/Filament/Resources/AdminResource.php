@@ -43,7 +43,7 @@ class AdminResource extends Resource
                 TextInput::make('email')
                     ->placeholder('Masukkan email')
                     ->filled()
-                    ->unique(User::class, 'email')
+                    ->unique(User::class, 'email', ignoreRecord: true)
                     ->regex('/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/')
                     ->validationMessages([
                         'filled' => 'Email wajib diisi.',

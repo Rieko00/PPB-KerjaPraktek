@@ -255,31 +255,31 @@ class LaporanKpResource extends Resource
                     ->columns('2')
                     ->collapsible(),
                 Actions::make([
-                    Action::make('status_laporan_edit')
-                        ->icon('heroicon-o-pencil-square')
-                        ->label('Edit Status Proposal')
-                        ->form([
-                            Select::make('status_laporan')
-                                ->label('Status Laporan')
-                                ->options([
-                                    'ditolak' => 'Ditolak',
-                                    'diterima' => 'Diterima',
-                                    'revisi' => 'Revisi',
-                                ])
-                                ->required()
-                                ->native('false')
-                                ->searchable(),
-                            Textarea::make('keterangan')
-                                ->label('Keterangan')
-                                ->required(),
+                    // Action::make('status_laporan_edit')
+                    //     ->icon('heroicon-o-pencil-square')
+                    //     ->label('Edit Status Proposal')
+                    //     ->form([
+                    //         Select::make('status_laporan')
+                    //             ->label('Status Laporan')
+                    //             ->options([
+                    //                 'ditolak' => 'Ditolak',
+                    //                 'diterima' => 'Diterima',
+                    //                 'revisi' => 'Revisi',
+                    //             ])
+                    //             ->required()
+                    //             ->native('false')
+                    //             ->searchable(),
+                    //         Textarea::make('keterangan')
+                    //             ->label('Keterangan')
+                    //             ->required(),
 
-                        ])
-                        ->action(function (array $data, LaporanKp $record): void {
-                            $record->status_laporan = $data['status_laporan'];
-                            $record->keterangan = $data['keterangan'];
-                            $record->save();
-                        })
-                        ->successNotificationTitle('Status updated'),
+                    //     ])
+                    //     ->action(function (array $data, LaporanKp $record): void {
+                    //         $record->status_laporan = $data['status_laporan'];
+                    //         $record->keterangan = $data['keterangan'];
+                    //         $record->save();
+                    //     })
+                    //     ->successNotificationTitle('Status updated'),
 
                     Action::make('revisi')
                         ->icon('heroicon-o-pencil-square')
