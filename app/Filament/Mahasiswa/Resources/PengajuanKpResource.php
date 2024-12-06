@@ -44,7 +44,9 @@ use App\Models\ProposalKp;
 use Faker\Provider\ar_EG\Text;
 use Teguh02\IndonesiaTerritoryForms\Traits\HasProvinceForm;
 use Filament\Forms\Components\Section;
+use Filament\Exceptions\Halt;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Database\Schema\Blueprint;
 use Teguh02\IndonesiaTerritoryForms\Traits\HasCityForm;
@@ -245,27 +247,27 @@ class PengajuanKpResource extends Resource
                     ])
                     ->columns('2')
                     ->collapsible(),
-                Actions::make([
-                    Action::make('status_pengajuan_edit')
-                        ->icon('heroicon-o-pencil-square')
-                        ->label('Edit Status Pengajuan')
-                        ->form([
-                            Select::make('status_pengajuan')
-                                ->label('Status Pengajuan')
-                                ->options([
-                                    'diterima' => 'Terima',
-                                    'ditolak' => 'Tolak',
-                                ])
-                                ->required()
-                                ->native('false')
-                                ->searchable(),
-                        ])
-                        ->action(function (array $data, PengajuanKp $record): void {
-                            $record->status_pengajuan = $data['status_pengajuan'];
-                            $record->save();
-                        })
-                        ->successNotificationTitle('Status updated'),
-                ]),
+                // Actions::make([
+                //     Action::make('status_pengajuan_edit')
+                //         ->icon('heroicon-o-pencil-square')
+                //         ->label('Edit Status Pengajuan')
+                //         ->form([
+                //             Select::make('status_pengajuan')
+                //                 ->label('Status Pengajuan')
+                //                 ->options([
+                //                     'diterima' => 'Terima',
+                //                     'ditolak' => 'Tolak',
+                //                 ])
+                //                 ->required()
+                //                 ->native('false')
+                //                 ->searchable(),
+                //         ])
+                //         ->action(function (array $data, PengajuanKp $record): void {
+                //             $record->status_pengajuan = $data['status_pengajuan'];
+                //             $record->save();
+                //         })
+                //         ->successNotificationTitle('Status updated'),
+                // ]),
             ]);
     }
 

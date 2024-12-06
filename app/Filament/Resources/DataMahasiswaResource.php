@@ -48,12 +48,14 @@ class DataMahasiswaResource extends Resource
                     ->placeholder('Masukkan NIM')
                     ->filled()
                     ->minLength(12)
+                    ->maxLength(12)
                     ->unique(DataMahasiswa::class, 'nim')
                     ->validationMessages([
                         'filled' => 'NIM wajib diisi.',
                         'unique' => 'NIM sudah digunakan.',
                         'minLength' => 'NIM harus 12 karakter.',
                         'numeric' => 'NIM harus berupa angka.',
+                        'maxLength' => 'NIM harus 12 karakter.',
                     ]),
                 TextInput::make('jumlah_sks')
                     ->numeric()

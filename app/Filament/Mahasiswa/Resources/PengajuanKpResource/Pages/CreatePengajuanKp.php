@@ -3,8 +3,10 @@
 namespace App\Filament\Mahasiswa\Resources\PengajuanKpResource\Pages;
 
 use App\Filament\Mahasiswa\Resources\PengajuanKpResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 
 class CreatePengajuanKp extends CreateRecord
 {
@@ -16,4 +18,24 @@ class CreatePengajuanKp extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
     protected static bool $canCreateAnother = false;
+
+    protected function beforeCreate(): void
+    {
+        // dd(Auth::user());    
+        if (Auth::user()->jumlah_sks < 70) {
+            Notification::make()
+                ->danger()
+                ->title('Jumalh SKS Tidak Mencukupi')
+                ->body('Anda harus memiliki minimal 70 SKS untuk mengajukan KP.')
+                ->persistent()
+                ->actions([
+                    Action::make('ok')
+                        ->button()
+                        ->close(),
+                ])
+                ->send();
+
+            $this->halt();
+        }
+    }
 }

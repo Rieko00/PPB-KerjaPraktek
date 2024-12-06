@@ -226,30 +226,30 @@ class SidangKpResource extends Resource
                     ])
                     ->columns('2')
                     ->collapsible(),
-                Actions::make([
-                    Action::make('Input Nilai Akhir')
-                        ->icon('heroicon-o-pencil-square')
-                        ->label('Input Nilai Akhir')
-                        ->form([
+                // Actions::make([
+                //     Action::make('Input Nilai Akhir')
+                //         ->icon('heroicon-o-pencil-square')
+                //         ->label('Input Nilai Akhir')
+                //         ->form([
 
-                            TextInput::make('nilai')
-                                ->label('Nilai Akhir')
-                                ->required()
-                                ->step('0.01')
-                                ->numeric(),
+                //             TextInput::make('nilai')
+                //                 ->label('Nilai Akhir')
+                //                 ->required()
+                //                 ->step('0.01')
+                //                 ->numeric(),
 
-                            Textarea::make('keterangan')
-                                ->label('Keterangan')
-                                ->required(),
+                //             Textarea::make('keterangan')
+                //                 ->label('Keterangan')
+                //                 ->required(),
 
-                        ])
-                        ->action(function (array $data, SidangKp $record): void {
-                            $record->nilai = $data['nilai'];
-                            $record->keterangan = $data['keterangan'];
-                            $record->save();
-                        })
-                        ->successNotificationTitle('Data updated'),
-                ]),
+                //         ])
+                //         ->action(function (array $data, SidangKp $record): void {
+                //             $record->nilai = $data['nilai'];
+                //             $record->keterangan = $data['keterangan'];
+                //             $record->save();
+                //         })
+                //         ->successNotificationTitle('Data updated'),
+                // ]),
             ]);
     }
 
